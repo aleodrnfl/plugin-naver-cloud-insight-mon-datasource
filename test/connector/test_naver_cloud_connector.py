@@ -46,7 +46,19 @@ class TestNaverCloudConnector(unittest.TestCase):
         print("ss",metrics_info)
         print_data(metrics_info, 'test_list_metrics')
 
+    def test_get_labels(self):
+        options = {}
+        payload = {
+            "prodKey": "460438474722512896"
+        }
+        secret_data = self.secret_data
+        endpoint = '/cw_fea/real/cw/api/rule/group/metric/search'
+        self.naver_cloud_connector = NaverCloudConnector(secret_data=secret_data)
 
+        self.naver_cloud_connector.set_connect({}, options=options, secret_data=secret_data, endpoint=endpoint, payload=payload)
+        label_info = self.naver_cloud_connector.get_labels(payload)
+        print("yy",label_info)
+        print_data(label_info, 'test_get_labels')
     def test_get_metric_data(self):
         options = {}
         end = datetime.utcnow()

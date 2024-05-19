@@ -19,7 +19,7 @@ class NaverCloudMetric(object):
             metric_info = {
                 'key': metric.get('idDimension'),
                 'name': metric.get('metric'),
-                'unit': metric.get('unit'),
+                'unit': self._get_metric_unit(metric.get('unit')),
                 'metric_query': {
                     'dimValues': payload.get('dimValues', []),
                     'query': payload.get('query', []),
@@ -30,6 +30,17 @@ class NaverCloudMetric(object):
             metrics_info.append(metric_info)
         return {'metrics': metrics_info}
 
+    def get_labels(self, payload):
+        all_labels = []
+
+        for metric in self.client['metrics']:
+            labels = {}
+            for dim_val in metric.get('dimensions', []):
+                dim = dim_val.get('dim')
+                val = dim_val.get('val')
+                labels[dim] = val
+            all_labels.append(labels)
+        return all_labels
 
     def get_metric_data(self, timeEnd, timeStart, cw_key, productName, metric, interval, aggregation, dimensions):
         metrics_data_info = []
@@ -44,7 +55,28 @@ class NaverCloudMetric(object):
 
         return metrics_data_info
 
+    @staticmethod
+    def _get_metric_unit(unit):
+        unit_name = unit
+        if unit == 's':
+            unit_name = 'Seconds'
+        elif unit == 'By':
+            unit_name = 'Bytes'
+        elif unit == '10^2.%' or unit == '%':
+            unit_name = 'Percentage'
+        elif unit == '1' or unit == 1:
+            unit_name = 'Count'
+        elif unit == 's{idle}':
+            unit_name = 'Idle/s'
+        elif unit == 's{uptime}':
+            unit_name = 'Uptime/s'
+        elif unit == 's{CPU}':
+            unit_name = 'CPU/s'
 
+        return {
+            'x': 'Timestamp',
+            'y': unit_name
+        }
 
 
 
