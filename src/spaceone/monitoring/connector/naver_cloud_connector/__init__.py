@@ -51,7 +51,6 @@ class NaverCloudConnector(BaseConnector):
         return NaverCloudMetric(self.client, self.url).list_metrics(*args)
     def get_metric_data(self, *args):
         return NaverCloudMetric(self.client, self.url).get_metric_data(*args)
-
     def get_labels(self, *args):
         return NaverCloudMetric(self.client, self.url).get_labels(*args)
 

@@ -32,7 +32,6 @@ class NaverCloudMetric(object):
 
     def get_labels(self, payload):
         all_labels = []
-
         for metric in self.client['metrics']:
             labels = {}
             for dim_val in metric.get('dimensions', []):
@@ -41,6 +40,7 @@ class NaverCloudMetric(object):
                 labels[dim] = val
             all_labels.append(labels)
         return all_labels
+
 
     def get_metric_data(self, timeEnd, timeStart, cw_key, productName, metric, interval, aggregation, dimensions):
         metrics_data_info = []
