@@ -54,15 +54,43 @@ class NaverCloudMetric(object):
     def get_metric_data(self, timeEnd, timeStart, cw_key, productName, metric, interval, aggregation, dimensions):
         metrics_data_info = []
         for metric in self.client:
-            label = metric[0]
+            timestamp = metric[0]
             value = metric[1]
             metric_data_info = {
-                'labels': label,    #timestamp
+                'timestamp': timestamp,    #timestamp
                 'values': value
             }
             metrics_data_info.append(metric_data_info)
 
         return metrics_data_info
+
+    @staticmethod
+    def get_metric_data_input(timeEnd, timeStart, cw_key, productName, metric, interval, aggregation, dimensions):
+        '''
+            SAMPLE
+              "timeEnd": end_millisec,   #1715813940000
+              "timeStart": start_millisec,     #1715813820000
+              "cw_key": "460438474722512896",
+              # "productName":"System/Auto Scaling(VPC)",
+              "metric": "used_rto",
+              # "interval": "Min1",
+              # "aggregation": "AVG",
+              "dimensions": {
+                  "type": "disk",
+                  "disk_idx": "loop0"
+              }
+        '''
+        metric_query = {
+            'timeStart': timeStart,
+            'timeEnd': timeEnd,
+            'cw_key': cw_key,
+            'productName': productName,
+            'metric': metric,
+            'interval': interval,
+            'aggregation': aggregation,
+            'dimensions': dimensions
+        }
+        return metric_query
 
     @staticmethod
     def _get_metric_unit(unit):

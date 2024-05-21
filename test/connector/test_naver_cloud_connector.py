@@ -70,7 +70,7 @@ class TestNaverCloudConnector(unittest.TestCase):
           "timeEnd": end_millisec,   #1715813940000
           "timeStart": start_millisec,     #1715813820000
           "cw_key": "460438474722512896",
-          "productName":"System/Auto Scaling(VPC)",
+          # "productName":"System/Auto Scaling(VPC)",
           "metric": "used_rto",
           # "interval": "Min1",
           # "aggregation": "AVG",

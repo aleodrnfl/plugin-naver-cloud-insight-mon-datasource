@@ -34,7 +34,6 @@ class TestMetricManager(unittest.TestCase):
     def test_convert_stat(self, *args):
         naver_cloud_manager = NaverCloudManager()
         stat = naver_cloud_manager._convert_stat('MEAN')
-
         print_data(stat, 'test_convert_stat')
 
     @patch.object(NaverCloudConnector, '__init__', return_value=None)
