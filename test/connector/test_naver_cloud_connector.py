@@ -57,6 +57,7 @@ class TestNaverCloudConnector(unittest.TestCase):
         self.naver_cloud_connector.set_connect({}, options=options, secret_data=secret_data, endpoint=endpoint, payload=payload)
         label_info = self.naver_cloud_connector.get_labels(payload)
         print_data(label_info, 'test_get_labels')
+        print("labels ", label_info)
     def test_get_metric_data(self):
         options = {}
         end = datetime.utcnow()

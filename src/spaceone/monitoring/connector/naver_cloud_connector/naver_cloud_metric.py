@@ -16,19 +16,28 @@ class NaverCloudMetric(object):
     def list_metrics(self, payload):
         metrics_info = []
         for metric in self.client['metrics']:
+
             metric_info = {
-                'key': metric.get('idDimension'),
+                'idDimension': metric.get('idDimension'),
                 'name': metric.get('metric'),
                 'unit': self._get_metric_unit(metric.get('unit')),
                 'metric_query': {
-                    'dimValues': payload.get('dimValues', []),
-                    'query': payload.get('query', []),
-                    'dimensionsSelectedList': payload.get('dimensionsSelectedList', []),
+                    'dimValues': self.get_dim_val(dimensions=metric.get('dimensions')),
                     'prodKey': payload['prodKey']
                 }
             }
             metrics_info.append(metric_info)
         return {'metrics': metrics_info}
+
+    def get_dim_val(*args, dimensions):
+        all_labels = []
+        for dim_val in dimensions:
+            labels = {}
+            dim = dim_val.get('dim')
+            val = dim_val.get('val')
+            labels[dim] = val
+            all_labels.append(labels)
+        return all_labels
 
     def get_labels(self, payload):
         all_labels = []

@@ -6,7 +6,7 @@ __all__ = ['MetricsModel']
 
 
 class MetricModel(Model):
-    key = StringType(required=True)
+    idDimension = StringType(required=True)
     name = StringType(required=True)
     unit = DictType(StringType, required=True)
     group = StringType(serialize_when_none=False)
